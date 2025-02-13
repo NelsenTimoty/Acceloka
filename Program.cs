@@ -2,8 +2,22 @@ using AccelokaAPI.Data;
 using AccelokaAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// ✅ Configure Serilog logging
+var logFilePath = Path.Combine("logs", $"Log-{DateTime.UtcNow:yyyyMMdd}.txt");
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()  // ✅ Log level: Information and above
+    .Enrich.FromLogContext()
+    .Enrich.WithThreadId()
+    .Enrich.WithProcessId()
+    .WriteTo.Console() // Optional: Log to console
+    .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day) // ✅ Save logs to /logs folder
+    .CreateLogger();
+
 
 // ✅ Add services to the container
 builder.Services.AddControllers();
@@ -29,6 +43,13 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Host.UseSerilog();
+
+var logDirectory = Path.Combine(Directory.GetCurrentDirectory(), "logs");
+if (!Directory.Exists(logDirectory))
+{
+    Directory.CreateDirectory(logDirectory);
+}
 
 var app = builder.Build();
 
@@ -39,6 +60,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

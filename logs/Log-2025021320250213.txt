@@ -1,0 +1,312 @@
+2025-02-13 20:25:50.277 +07:00 [INF] Now listening on: http://localhost:5297
+2025-02-13 20:25:50.322 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-13 20:25:50.325 +07:00 [INF] Hosting environment: Development
+2025-02-13 20:25:50.328 +07:00 [INF] Content root path: C:\Accelist Internship\Exam 1\AccelokaAPI
+2025-02-13 20:25:58.021 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/swagger/index.html - null null
+2025-02-13 20:25:58.189 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/swagger/index.html - 200 null text/html;charset=utf-8 169.931ms
+2025-02-13 20:25:59.591 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/swagger/v1/swagger.json - null null
+2025-02-13 20:25:59.811 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 219.9579ms
+2025-02-13 20:26:05.984 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=asc&page=1 - null null
+2025-02-13 20:26:06.003 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-02-13 20:26:06.012 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 20:26:06.087 +07:00 [INF] Route matched with {action = "GetAvailableTickets", controller = "Ticket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAvailableTickets(System.String, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String, System.String, Int32) on controller AccelokaAPI.Controllers.TicketController (AccelokaAPI).
+2025-02-13 20:26:06.316 +07:00 [INF] Fetching available tickets with filters: Category=null, Code=null, Name=null, MaxPrice=null, MinEventDate=null, MaxEventDate=null, OrderBy=Code, OrderState=asc, Page=1
+2025-02-13 20:26:06.936 +07:00 [WRN] No store type was specified for the decimal property 'TotalPrice' on entity type 'BookedTicketDetail'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-02-13 20:26:06.939 +07:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Ticket'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2025-02-13 20:26:08.907 +07:00 [INF] Executed DbCommand (60ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Tickets] AS [t]
+WHERE [t].[Quota] > 0
+2025-02-13 20:26:09.174 +07:00 [INF] Executed DbCommand (37ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[CategoryId], [t0].[Code], [t0].[CreatedAt], [t0].[CreatedBy], [t0].[EventDate], [t0].[Name], [t0].[Price], [t0].[Quota], [t0].[UpdatedAt], [t0].[UpdatedBy], [c].[CategoryId], [c].[CategoryName]
+FROM (
+    SELECT [t].[Id], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy]
+    FROM [Tickets] AS [t]
+    WHERE [t].[Quota] > 0
+    ORDER BY [t].[Code]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t0]
+INNER JOIN [Categories] AS [c] ON [t0].[CategoryId] = [c].[CategoryId]
+ORDER BY [t0].[Code]
+2025-02-13 20:26:09.268 +07:00 [INF] Executing OkObjectResult, writing value of type 'AccelokaAPI.DTOs.PaginatedResponse`1[[AccelokaAPI.DTOs.TicketDTO, AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 20:26:09.306 +07:00 [INF] Executed action AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI) in 3210.7478ms
+2025-02-13 20:26:09.309 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 20:26:09.312 +07:00 [INF] HTTP GET /api/v1/get-available-ticket responded 200 in 3314.7669 ms
+2025-02-13 20:26:09.326 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=asc&page=1 - 200 null application/json; charset=utf-8 3341.7478ms
+2025-02-13 20:27:15.408 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/api/v1/get-booked-ticket/bookedTicketId?bookedTicketIds=5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - null null
+2025-02-13 20:27:15.416 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.BookedTicketController.GetBookedTicketDetails (AccelokaAPI)'
+2025-02-13 20:27:15.431 +07:00 [INF] Route matched with {action = "GetBookedTicketDetails", controller = "BookedTicket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetBookedTicketDetails(System.Collections.Generic.List`1[System.Guid]) on controller AccelokaAPI.Controllers.BookedTicketController (AccelokaAPI).
+2025-02-13 20:27:15.451 +07:00 [INF] Received GetBookedTicketDetails request: ["5659cfe3-2cd3-44df-a8b7-08dd4b4efec3"]
+2025-02-13 20:27:15.648 +07:00 [INF] Executed DbCommand (46ms) [Parameters=[@__bookedTicketIds_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Code] AS [TicketCode], [t].[Name] AS [TicketName], [t].[EventDate], [b1].[Quantity], [c].[CategoryName]
+FROM [BookedTickets] AS [b]
+INNER JOIN [BookedTicketDetails] AS [b1] ON [b].[Id] = [b1].[BookedTicketId]
+INNER JOIN [Tickets] AS [t] ON [b1].[TicketId] = [t].[Id]
+INNER JOIN [Categories] AS [c] ON [t].[CategoryId] = [c].[CategoryId]
+WHERE [b].[Id] IN (
+    SELECT [b0].[value]
+    FROM OPENJSON(@__bookedTicketIds_0) WITH ([value] uniqueidentifier '$') AS [b0]
+)
+2025-02-13 20:27:15.651 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[System.Linq.IGrouping`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[AccelokaAPI.Models.BookedTicketDetailDto, AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Linq, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a],[<>f__AnonymousType0`3[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 20:27:15.676 +07:00 [INF] Executed action AccelokaAPI.Controllers.BookedTicketController.GetBookedTicketDetails (AccelokaAPI) in 240.6027ms
+2025-02-13 20:27:15.679 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.BookedTicketController.GetBookedTicketDetails (AccelokaAPI)'
+2025-02-13 20:27:15.681 +07:00 [INF] HTTP GET /api/v1/get-booked-ticket/bookedTicketId responded 200 in 265.0876 ms
+2025-02-13 20:27:15.685 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/api/v1/get-booked-ticket/bookedTicketId?bookedTicketIds=5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - 200 null application/json; charset=utf-8 276.661ms
+2025-02-13 20:28:04.598 +07:00 [INF] Request starting HTTP/1.1 PUT http://localhost:5297/api/v1/edit-booked-ticket/5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - application/json 56
+2025-02-13 20:28:04.601 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.BookedTicketController.EditBookedTicket (AccelokaAPI)'
+2025-02-13 20:28:04.607 +07:00 [INF] Route matched with {action = "EditBookedTicket", controller = "BookedTicket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] EditBookedTicket(System.Guid, System.Collections.Generic.List`1[TicketUpdateModel]) on controller AccelokaAPI.Controllers.BookedTicketController (AccelokaAPI).
+2025-02-13 20:28:04.668 +07:00 [INF] Received EditBookedTicket request: BookedTicketId="5659cfe3-2cd3-44df-a8b7-08dd4b4efec3", Tickets=[{"KodeTicket":"C002","Quantity":19,"$type":"TicketUpdateModel"}]
+2025-02-13 20:28:04.816 +07:00 [INF] Executed DbCommand (16ms) [Parameters=[@__bookedTicketId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b1].[Id], [b1].[BookingDate], [s].[Id], [s].[BookedTicketId], [s].[Quantity], [s].[TicketId], [s].[TotalPrice], [s].[Id0], [s].[CategoryId], [s].[Code], [s].[CreatedAt], [s].[CreatedBy], [s].[EventDate], [s].[Name], [s].[Price], [s].[Quota], [s].[UpdatedAt], [s].[UpdatedBy]
+FROM (
+    SELECT TOP(1) [b].[Id], [b].[BookingDate]
+    FROM [BookedTickets] AS [b]
+    WHERE [b].[Id] = @__bookedTicketId_0
+) AS [b1]
+LEFT JOIN (
+    SELECT [b0].[Id], [b0].[BookedTicketId], [b0].[Quantity], [b0].[TicketId], [b0].[TotalPrice], [t].[Id] AS [Id0], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy]
+    FROM [BookedTicketDetails] AS [b0]
+    INNER JOIN [Tickets] AS [t] ON [b0].[TicketId] = [t].[Id]
+) AS [s] ON [b1].[Id] = [s].[BookedTicketId]
+ORDER BY [b1].[Id], [s].[Id]
+2025-02-13 20:28:04.866 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[@__item_KodeTicket_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy]
+FROM [Tickets] AS [t]
+WHERE [t].[Code] = @__item_KodeTicket_0
+2025-02-13 20:28:05.018 +07:00 [INF] Executed DbCommand (17ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32), @p3='?' (DbType = Guid), @p2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [BookedTicketDetails] SET [Quantity] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+UPDATE [Tickets] SET [Quota] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2025-02-13 20:28:05.141 +07:00 [INF] Executed DbCommand (18ms) [Parameters=[@__bookedTicketId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b1].[Id], [b1].[BookingDate], [s].[Id], [s].[BookedTicketId], [s].[Quantity], [s].[TicketId], [s].[TotalPrice], [s].[Id0], [s].[CategoryId], [s].[Code], [s].[CreatedAt], [s].[CreatedBy], [s].[EventDate], [s].[Name], [s].[Price], [s].[Quota], [s].[UpdatedAt], [s].[UpdatedBy], [s].[CategoryId0], [s].[CategoryName]
+FROM (
+    SELECT TOP(1) [b].[Id], [b].[BookingDate]
+    FROM [BookedTickets] AS [b]
+    WHERE [b].[Id] = @__bookedTicketId_0
+) AS [b1]
+LEFT JOIN (
+    SELECT [b0].[Id], [b0].[BookedTicketId], [b0].[Quantity], [b0].[TicketId], [b0].[TotalPrice], [t].[Id] AS [Id0], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy], [c].[CategoryId] AS [CategoryId0], [c].[CategoryName]
+    FROM [BookedTicketDetails] AS [b0]
+    INNER JOIN [Tickets] AS [t] ON [b0].[TicketId] = [t].[Id]
+    INNER JOIN [Categories] AS [c] ON [t].[CategoryId] = [c].[CategoryId]
+) AS [s] ON [b1].[Id] = [s].[BookedTicketId]
+ORDER BY [b1].[Id], [s].[Id], [s].[Id0]
+2025-02-13 20:28:05.157 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[<>f__AnonymousType2`4[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 20:28:05.167 +07:00 [INF] Executed action AccelokaAPI.Controllers.BookedTicketController.EditBookedTicket (AccelokaAPI) in 555.7111ms
+2025-02-13 20:28:05.170 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.BookedTicketController.EditBookedTicket (AccelokaAPI)'
+2025-02-13 20:28:05.173 +07:00 [INF] HTTP PUT /api/v1/edit-booked-ticket/5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 responded 200 in 571.5515 ms
+2025-02-13 20:28:05.179 +07:00 [INF] Request finished HTTP/1.1 PUT http://localhost:5297/api/v1/edit-booked-ticket/5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - 200 null application/json; charset=utf-8 580.2928ms
+2025-02-13 20:28:10.377 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=asc&page=1 - null null
+2025-02-13 20:28:10.381 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 20:28:10.383 +07:00 [INF] Route matched with {action = "GetAvailableTickets", controller = "Ticket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAvailableTickets(System.String, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String, System.String, Int32) on controller AccelokaAPI.Controllers.TicketController (AccelokaAPI).
+2025-02-13 20:28:10.389 +07:00 [INF] Fetching available tickets with filters: Category=null, Code=null, Name=null, MaxPrice=null, MinEventDate=null, MaxEventDate=null, OrderBy=Code, OrderState=asc, Page=1
+2025-02-13 20:28:10.415 +07:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Tickets] AS [t]
+WHERE [t].[Quota] > 0
+2025-02-13 20:28:10.434 +07:00 [INF] Executed DbCommand (11ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[CategoryId], [t0].[Code], [t0].[CreatedAt], [t0].[CreatedBy], [t0].[EventDate], [t0].[Name], [t0].[Price], [t0].[Quota], [t0].[UpdatedAt], [t0].[UpdatedBy], [c].[CategoryId], [c].[CategoryName]
+FROM (
+    SELECT [t].[Id], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy]
+    FROM [Tickets] AS [t]
+    WHERE [t].[Quota] > 0
+    ORDER BY [t].[Code]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t0]
+INNER JOIN [Categories] AS [c] ON [t0].[CategoryId] = [c].[CategoryId]
+ORDER BY [t0].[Code]
+2025-02-13 20:28:10.444 +07:00 [INF] Executing OkObjectResult, writing value of type 'AccelokaAPI.DTOs.PaginatedResponse`1[[AccelokaAPI.DTOs.TicketDTO, AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 20:28:10.449 +07:00 [INF] Executed action AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI) in 61.5884ms
+2025-02-13 20:28:10.452 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 20:28:10.454 +07:00 [INF] HTTP GET /api/v1/get-available-ticket responded 200 in 72.9262 ms
+2025-02-13 20:28:10.458 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=asc&page=1 - 200 null application/json; charset=utf-8 80.5177ms
+2025-02-13 20:28:27.271 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/api/v1/get-booked-ticket/bookedTicketId?bookedTicketIds=5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - null null
+2025-02-13 20:28:27.274 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.BookedTicketController.GetBookedTicketDetails (AccelokaAPI)'
+2025-02-13 20:28:27.276 +07:00 [INF] Route matched with {action = "GetBookedTicketDetails", controller = "BookedTicket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetBookedTicketDetails(System.Collections.Generic.List`1[System.Guid]) on controller AccelokaAPI.Controllers.BookedTicketController (AccelokaAPI).
+2025-02-13 20:28:27.282 +07:00 [INF] Received GetBookedTicketDetails request: ["5659cfe3-2cd3-44df-a8b7-08dd4b4efec3"]
+2025-02-13 20:28:27.333 +07:00 [INF] Executed DbCommand (40ms) [Parameters=[@__bookedTicketIds_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Code] AS [TicketCode], [t].[Name] AS [TicketName], [t].[EventDate], [b1].[Quantity], [c].[CategoryName]
+FROM [BookedTickets] AS [b]
+INNER JOIN [BookedTicketDetails] AS [b1] ON [b].[Id] = [b1].[BookedTicketId]
+INNER JOIN [Tickets] AS [t] ON [b1].[TicketId] = [t].[Id]
+INNER JOIN [Categories] AS [c] ON [t].[CategoryId] = [c].[CategoryId]
+WHERE [b].[Id] IN (
+    SELECT [b0].[value]
+    FROM OPENJSON(@__bookedTicketIds_0) WITH ([value] uniqueidentifier '$') AS [b0]
+)
+2025-02-13 20:28:27.338 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[System.Linq.IGrouping`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[AccelokaAPI.Models.BookedTicketDetailDto, AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Linq, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a],[<>f__AnonymousType0`3[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 20:28:27.341 +07:00 [INF] Executed action AccelokaAPI.Controllers.BookedTicketController.GetBookedTicketDetails (AccelokaAPI) in 62.4793ms
+2025-02-13 20:28:27.343 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.BookedTicketController.GetBookedTicketDetails (AccelokaAPI)'
+2025-02-13 20:28:27.345 +07:00 [INF] HTTP GET /api/v1/get-booked-ticket/bookedTicketId responded 200 in 70.4695 ms
+2025-02-13 20:28:27.348 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/api/v1/get-booked-ticket/bookedTicketId?bookedTicketIds=5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - 200 null application/json; charset=utf-8 76.6464ms
+2025-02-13 20:28:39.124 +07:00 [INF] Request starting HTTP/1.1 PUT http://localhost:5297/api/v1/edit-booked-ticket/5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - application/json 56
+2025-02-13 20:28:39.127 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.BookedTicketController.EditBookedTicket (AccelokaAPI)'
+2025-02-13 20:28:39.129 +07:00 [INF] Route matched with {action = "EditBookedTicket", controller = "BookedTicket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] EditBookedTicket(System.Guid, System.Collections.Generic.List`1[TicketUpdateModel]) on controller AccelokaAPI.Controllers.BookedTicketController (AccelokaAPI).
+2025-02-13 20:28:39.134 +07:00 [INF] Received EditBookedTicket request: BookedTicketId="5659cfe3-2cd3-44df-a8b7-08dd4b4efec3", Tickets=[{"KodeTicket":"C002","Quantity":14,"$type":"TicketUpdateModel"}]
+2025-02-13 20:28:39.162 +07:00 [INF] Executed DbCommand (11ms) [Parameters=[@__bookedTicketId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b1].[Id], [b1].[BookingDate], [s].[Id], [s].[BookedTicketId], [s].[Quantity], [s].[TicketId], [s].[TotalPrice], [s].[Id0], [s].[CategoryId], [s].[Code], [s].[CreatedAt], [s].[CreatedBy], [s].[EventDate], [s].[Name], [s].[Price], [s].[Quota], [s].[UpdatedAt], [s].[UpdatedBy]
+FROM (
+    SELECT TOP(1) [b].[Id], [b].[BookingDate]
+    FROM [BookedTickets] AS [b]
+    WHERE [b].[Id] = @__bookedTicketId_0
+) AS [b1]
+LEFT JOIN (
+    SELECT [b0].[Id], [b0].[BookedTicketId], [b0].[Quantity], [b0].[TicketId], [b0].[TotalPrice], [t].[Id] AS [Id0], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy]
+    FROM [BookedTicketDetails] AS [b0]
+    INNER JOIN [Tickets] AS [t] ON [b0].[TicketId] = [t].[Id]
+) AS [s] ON [b1].[Id] = [s].[BookedTicketId]
+ORDER BY [b1].[Id], [s].[Id]
+2025-02-13 20:28:39.178 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[@__item_KodeTicket_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy]
+FROM [Tickets] AS [t]
+WHERE [t].[Code] = @__item_KodeTicket_0
+2025-02-13 20:28:39.189 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32), @p3='?' (DbType = Guid), @p2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [BookedTicketDetails] SET [Quantity] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+UPDATE [Tickets] SET [Quota] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2025-02-13 20:28:39.216 +07:00 [INF] Executed DbCommand (15ms) [Parameters=[@__bookedTicketId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b1].[Id], [b1].[BookingDate], [s].[Id], [s].[BookedTicketId], [s].[Quantity], [s].[TicketId], [s].[TotalPrice], [s].[Id0], [s].[CategoryId], [s].[Code], [s].[CreatedAt], [s].[CreatedBy], [s].[EventDate], [s].[Name], [s].[Price], [s].[Quota], [s].[UpdatedAt], [s].[UpdatedBy], [s].[CategoryId0], [s].[CategoryName]
+FROM (
+    SELECT TOP(1) [b].[Id], [b].[BookingDate]
+    FROM [BookedTickets] AS [b]
+    WHERE [b].[Id] = @__bookedTicketId_0
+) AS [b1]
+LEFT JOIN (
+    SELECT [b0].[Id], [b0].[BookedTicketId], [b0].[Quantity], [b0].[TicketId], [b0].[TotalPrice], [t].[Id] AS [Id0], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy], [c].[CategoryId] AS [CategoryId0], [c].[CategoryName]
+    FROM [BookedTicketDetails] AS [b0]
+    INNER JOIN [Tickets] AS [t] ON [b0].[TicketId] = [t].[Id]
+    INNER JOIN [Categories] AS [c] ON [t].[CategoryId] = [c].[CategoryId]
+) AS [s] ON [b1].[Id] = [s].[BookedTicketId]
+ORDER BY [b1].[Id], [s].[Id], [s].[Id0]
+2025-02-13 20:28:39.221 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[<>f__AnonymousType2`4[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 20:28:39.224 +07:00 [INF] Executed action AccelokaAPI.Controllers.BookedTicketController.EditBookedTicket (AccelokaAPI) in 91.9726ms
+2025-02-13 20:28:39.227 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.BookedTicketController.EditBookedTicket (AccelokaAPI)'
+2025-02-13 20:28:39.228 +07:00 [INF] HTTP PUT /api/v1/edit-booked-ticket/5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 responded 200 in 100.8679 ms
+2025-02-13 20:28:39.242 +07:00 [INF] Request finished HTTP/1.1 PUT http://localhost:5297/api/v1/edit-booked-ticket/5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - 200 null application/json; charset=utf-8 116.8085ms
+2025-02-13 20:28:42.855 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/api/v1/get-booked-ticket/bookedTicketId?bookedTicketIds=5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - null null
+2025-02-13 20:28:42.859 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.BookedTicketController.GetBookedTicketDetails (AccelokaAPI)'
+2025-02-13 20:28:42.860 +07:00 [INF] Route matched with {action = "GetBookedTicketDetails", controller = "BookedTicket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetBookedTicketDetails(System.Collections.Generic.List`1[System.Guid]) on controller AccelokaAPI.Controllers.BookedTicketController (AccelokaAPI).
+2025-02-13 20:28:42.865 +07:00 [INF] Received GetBookedTicketDetails request: ["5659cfe3-2cd3-44df-a8b7-08dd4b4efec3"]
+2025-02-13 20:28:42.904 +07:00 [INF] Executed DbCommand (32ms) [Parameters=[@__bookedTicketIds_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Code] AS [TicketCode], [t].[Name] AS [TicketName], [t].[EventDate], [b1].[Quantity], [c].[CategoryName]
+FROM [BookedTickets] AS [b]
+INNER JOIN [BookedTicketDetails] AS [b1] ON [b].[Id] = [b1].[BookedTicketId]
+INNER JOIN [Tickets] AS [t] ON [b1].[TicketId] = [t].[Id]
+INNER JOIN [Categories] AS [c] ON [t].[CategoryId] = [c].[CategoryId]
+WHERE [b].[Id] IN (
+    SELECT [b0].[value]
+    FROM OPENJSON(@__bookedTicketIds_0) WITH ([value] uniqueidentifier '$') AS [b0]
+)
+2025-02-13 20:28:42.910 +07:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[System.Linq.IGrouping`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[AccelokaAPI.Models.BookedTicketDetailDto, AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Linq, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a],[<>f__AnonymousType0`3[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 20:28:42.915 +07:00 [INF] Executed action AccelokaAPI.Controllers.BookedTicketController.GetBookedTicketDetails (AccelokaAPI) in 51.0404ms
+2025-02-13 20:28:42.918 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.BookedTicketController.GetBookedTicketDetails (AccelokaAPI)'
+2025-02-13 20:28:42.921 +07:00 [INF] HTTP GET /api/v1/get-booked-ticket/bookedTicketId responded 200 in 62.0621 ms
+2025-02-13 20:28:42.925 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/api/v1/get-booked-ticket/bookedTicketId?bookedTicketIds=5659CFE3-2CD3-44DF-A8B7-08DD4B4EFEC3 - 200 null application/json; charset=utf-8 70.34ms
+2025-02-13 20:28:48.582 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=asc&page=1 - null null
+2025-02-13 20:28:48.586 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 20:28:48.588 +07:00 [INF] Route matched with {action = "GetAvailableTickets", controller = "Ticket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAvailableTickets(System.String, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String, System.String, Int32) on controller AccelokaAPI.Controllers.TicketController (AccelokaAPI).
+2025-02-13 20:28:48.594 +07:00 [INF] Fetching available tickets with filters: Category=null, Code=null, Name=null, MaxPrice=null, MinEventDate=null, MaxEventDate=null, OrderBy=Code, OrderState=asc, Page=1
+2025-02-13 20:28:48.645 +07:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Tickets] AS [t]
+WHERE [t].[Quota] > 0
+2025-02-13 20:28:48.667 +07:00 [INF] Executed DbCommand (13ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[CategoryId], [t0].[Code], [t0].[CreatedAt], [t0].[CreatedBy], [t0].[EventDate], [t0].[Name], [t0].[Price], [t0].[Quota], [t0].[UpdatedAt], [t0].[UpdatedBy], [c].[CategoryId], [c].[CategoryName]
+FROM (
+    SELECT [t].[Id], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy]
+    FROM [Tickets] AS [t]
+    WHERE [t].[Quota] > 0
+    ORDER BY [t].[Code]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t0]
+INNER JOIN [Categories] AS [c] ON [t0].[CategoryId] = [c].[CategoryId]
+ORDER BY [t0].[Code]
+2025-02-13 20:28:48.674 +07:00 [INF] Executing OkObjectResult, writing value of type 'AccelokaAPI.DTOs.PaginatedResponse`1[[AccelokaAPI.DTOs.TicketDTO, AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 20:28:48.678 +07:00 [INF] Executed action AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI) in 86.8425ms
+2025-02-13 20:28:48.681 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 20:28:48.683 +07:00 [INF] HTTP GET /api/v1/get-available-ticket responded 200 in 97.1518 ms
+2025-02-13 20:28:48.688 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=asc&page=1 - 200 null application/json; charset=utf-8 105.2311ms
+2025-02-13 21:48:28.588 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5297/api/v1/book-ticket - application/json 82
+2025-02-13 21:48:28.630 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.BookingController.BookTicket (AccelokaAPI)'
+2025-02-13 21:48:28.713 +07:00 [INF] Route matched with {action = "BookTicket", controller = "Booking"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] BookTicket(AccelokaAPI.Models.BookingRequest) on controller AccelokaAPI.Controllers.BookingController (AccelokaAPI).
+2025-02-13 21:48:28.825 +07:00 [INF] Received booking request: {"Tickets":[{"TicketCode":"C001","Quantity":1,"$type":"TicketBookingRequest"}],"$type":"BookingRequest"}
+2025-02-13 21:48:30.314 +07:00 [INF] Executed DbCommand (48ms) [Parameters=[@__ticketCodes_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy], [c].[CategoryId], [c].[CategoryName]
+FROM [Tickets] AS [t]
+INNER JOIN [Categories] AS [c] ON [t].[CategoryId] = [c].[CategoryId]
+WHERE [t].[Code] IN (
+    SELECT [t0].[value]
+    FROM OPENJSON(@__ticketCodes_0) WITH ([value] nvarchar(450) '$') AS [t0]
+)
+2025-02-13 21:48:30.462 +07:00 [INF] Executed DbCommand (23ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p3='?' (DbType = Guid), @p2='?' (DbType = Int32), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Int32), @p7='?' (DbType = Guid), @p8='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [BookedTickets] ([Id], [BookingDate])
+VALUES (@p0, @p1);
+UPDATE [Tickets] SET [Quota] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+INSERT INTO [BookedTicketDetails] ([Id], [BookedTicketId], [Quantity], [TicketId], [TotalPrice])
+VALUES (@p4, @p5, @p6, @p7, @p8);
+2025-02-13 21:48:30.469 +07:00 [INF] Booking successful. Total price: 5000000.00, Booking ID: "ec2ab33d-39ca-43cb-f5b1-08dd4c3d7b64"
+2025-02-13 21:48:30.473 +07:00 [INF] Executing OkObjectResult, writing value of type 'AccelokaAPI.Models.BookingResponse'.
+2025-02-13 21:48:30.481 +07:00 [INF] Executed action AccelokaAPI.Controllers.BookingController.BookTicket (AccelokaAPI) in 1764.6251ms
+2025-02-13 21:48:30.485 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.BookingController.BookTicket (AccelokaAPI)'
+2025-02-13 21:48:30.487 +07:00 [INF] HTTP POST /api/v1/book-ticket responded 200 in 1861.6704 ms
+2025-02-13 21:48:30.491 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5297/api/v1/book-ticket - 200 null application/json; charset=utf-8 1906.4214ms
+2025-02-13 21:54:20.183 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=dsc&page=1 - null null
+2025-02-13 21:54:20.189 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 21:54:20.191 +07:00 [INF] Route matched with {action = "GetAvailableTickets", controller = "Ticket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAvailableTickets(System.String, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String, System.String, Int32) on controller AccelokaAPI.Controllers.TicketController (AccelokaAPI).
+2025-02-13 21:54:20.203 +07:00 [INF] Fetching available tickets with filters: Category=null, Code=null, Name=null, MaxPrice=null, MinEventDate=null, MaxEventDate=null, OrderBy=Code, OrderState=dsc, Page=1
+2025-02-13 21:54:20.234 +07:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Tickets] AS [t]
+WHERE [t].[Quota] > 0
+2025-02-13 21:54:20.259 +07:00 [INF] Executed DbCommand (13ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[CategoryId], [t0].[Code], [t0].[CreatedAt], [t0].[CreatedBy], [t0].[EventDate], [t0].[Name], [t0].[Price], [t0].[Quota], [t0].[UpdatedAt], [t0].[UpdatedBy], [c].[CategoryId], [c].[CategoryName]
+FROM (
+    SELECT [t].[Id], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy]
+    FROM [Tickets] AS [t]
+    WHERE [t].[Quota] > 0
+    ORDER BY [t].[Code]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t0]
+INNER JOIN [Categories] AS [c] ON [t0].[CategoryId] = [c].[CategoryId]
+ORDER BY [t0].[Code]
+2025-02-13 21:54:20.266 +07:00 [INF] Executing OkObjectResult, writing value of type 'AccelokaAPI.DTOs.PaginatedResponse`1[[AccelokaAPI.DTOs.TicketDTO, AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 21:54:20.271 +07:00 [INF] Executed action AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI) in 75.8461ms
+2025-02-13 21:54:20.273 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 21:54:20.275 +07:00 [INF] HTTP GET /api/v1/get-available-ticket responded 200 in 85.9524 ms
+2025-02-13 21:54:20.279 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=dsc&page=1 - 200 null application/json; charset=utf-8 95.7722ms
+2025-02-13 21:54:30.711 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=asc&page=1 - null null
+2025-02-13 21:54:30.718 +07:00 [INF] Executing endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 21:54:30.722 +07:00 [INF] Route matched with {action = "GetAvailableTickets", controller = "Ticket"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAvailableTickets(System.String, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String, System.String, Int32) on controller AccelokaAPI.Controllers.TicketController (AccelokaAPI).
+2025-02-13 21:54:30.734 +07:00 [INF] Fetching available tickets with filters: Category=null, Code=null, Name=null, MaxPrice=null, MinEventDate=null, MaxEventDate=null, OrderBy=Code, OrderState=asc, Page=1
+2025-02-13 21:54:30.753 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Tickets] AS [t]
+WHERE [t].[Quota] > 0
+2025-02-13 21:54:30.776 +07:00 [INF] Executed DbCommand (13ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[CategoryId], [t0].[Code], [t0].[CreatedAt], [t0].[CreatedBy], [t0].[EventDate], [t0].[Name], [t0].[Price], [t0].[Quota], [t0].[UpdatedAt], [t0].[UpdatedBy], [c].[CategoryId], [c].[CategoryName]
+FROM (
+    SELECT [t].[Id], [t].[CategoryId], [t].[Code], [t].[CreatedAt], [t].[CreatedBy], [t].[EventDate], [t].[Name], [t].[Price], [t].[Quota], [t].[UpdatedAt], [t].[UpdatedBy]
+    FROM [Tickets] AS [t]
+    WHERE [t].[Quota] > 0
+    ORDER BY [t].[Code]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t0]
+INNER JOIN [Categories] AS [c] ON [t0].[CategoryId] = [c].[CategoryId]
+ORDER BY [t0].[Code]
+2025-02-13 21:54:30.785 +07:00 [INF] Executing OkObjectResult, writing value of type 'AccelokaAPI.DTOs.PaginatedResponse`1[[AccelokaAPI.DTOs.TicketDTO, AccelokaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-13 21:54:30.790 +07:00 [INF] Executed action AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI) in 59.3873ms
+2025-02-13 21:54:30.793 +07:00 [INF] Executed endpoint 'AccelokaAPI.Controllers.TicketController.GetAvailableTickets (AccelokaAPI)'
+2025-02-13 21:54:30.797 +07:00 [INF] HTTP GET /api/v1/get-available-ticket responded 200 in 79.2369 ms
+2025-02-13 21:54:30.801 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5297/api/v1/get-available-ticket?orderBy=Code&orderState=asc&page=1 - 200 null application/json; charset=utf-8 90.0581ms
+2025-02-13 21:54:58.799 +07:00 [INF] Application is shutting down...

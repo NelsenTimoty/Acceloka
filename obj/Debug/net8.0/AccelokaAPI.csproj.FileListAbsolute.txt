@@ -184,3 +184,6 @@ C:\Accelist Internship\Exam 1\AccelokaAPI\obj\Debug\net8.0\refint\AccelokaAPI.dl
 C:\Accelist Internship\Exam 1\AccelokaAPI\obj\Debug\net8.0\AccelokaAPI.pdb
 C:\Accelist Internship\Exam 1\AccelokaAPI\obj\Debug\net8.0\AccelokaAPI.genruntimeconfig.cache
 C:\Accelist Internship\Exam 1\AccelokaAPI\obj\Debug\net8.0\ref\AccelokaAPI.dll
+C:\Accelist Internship\Exam 1\AccelokaAPI\obj\Debug\net8.0\AccelokaAPI.sourcelink.json
+C:\Accelist Internship\Exam 1\AccelokaAPI\bin\Debug\net8.0\Serilog.Enrichers.Process.dll
+C:\Accelist Internship\Exam 1\AccelokaAPI\bin\Debug\net8.0\Serilog.Enrichers.Thread.dll

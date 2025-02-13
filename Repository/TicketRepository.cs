@@ -24,25 +24,37 @@ namespace AccelokaAPI.Repositories
                 .Include(t => t.Category) // 🔹 Ensure Category is loaded
                 .Where(t => t.Quota > 0)  // Only available tickets
                 .AsQueryable();
-
+            
             // 🔍 Filtering
             if (!string.IsNullOrEmpty(category))
+            {
                 query = query.Where(t => t.Category != null && t.Category.CategoryName.Contains(category));
+            }
 
             if (!string.IsNullOrEmpty(code))
+            {
                 query = query.Where(t => t.Code.Contains(code));
+            }
 
             if (!string.IsNullOrEmpty(name))
+            {
                 query = query.Where(t => t.Name.Contains(name));
+            }
 
             if (maxPrice.HasValue)
+            {
                 query = query.Where(t => t.Price <= maxPrice.Value);
+            }
 
             if (minEventDate.HasValue)
+            {
                 query = query.Where(t => t.EventDate >= minEventDate.Value);
+            }
 
             if (maxEventDate.HasValue)
+            {
                 query = query.Where(t => t.EventDate <= maxEventDate.Value);
+            }
 
             // 🔃 Sorting (Default: Order by `Code` ascending)
             bool isDescending = orderState.Equals("desc", StringComparison.OrdinalIgnoreCase);

@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AccelokaAPI.Models;
 using AccelokaAPI.Data;
+using Serilog;
 
 namespace AccelokaAPI.Controllers
 {
@@ -20,21 +22,39 @@ namespace AccelokaAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult BookTicket([FromBody] BookingRequest request)
+        public async Task<IActionResult> BookTicket([FromBody] BookingRequest request)
         {
+            Log.Information("Received booking request: {@Request}", request);
+            
             if (request == null || request.Tickets == null || !request.Tickets.Any())
             {
-                return BadRequest(new { message = "Invalid request body." });
+                Log.Warning("Invalid booking request received.");
+                return BadRequest(new ProblemDetails
+                {   
+                    Type = "https://tools.ietf.org/html/rfc7807",
+                    Status = 400,
+                    Title = "Invalid Request",
+                    Detail = "Request body is missing or invalid.",
+                    Instance = HttpContext.Request.Path
+                });
             }
 
             var ticketCodes = request.Tickets.Select(t => t.TicketCode).ToList();
-            var tickets = _context.Tickets.Include(t => t.Category)
-                                          .Where(t => ticketCodes.Contains(t.Code))
-                                          .ToList();
+            var tickets = await _context.Tickets.Include(t => t.Category)
+                                                .Where(t => ticketCodes.Contains(t.Code))
+                                                .ToListAsync();
             
             if (tickets.Count != ticketCodes.Count)
             {
-                return NotFound(new { message = "One or more ticket codes are invalid." });
+                Log.Warning("One or more ticket codes are invalid. Requested: {@TicketCodes}", ticketCodes);
+                return NotFound(new ProblemDetails
+                {   
+                    Type = "https://tools.ietf.org/html/rfc7807",
+                    Status = 404,
+                    Title = "Tickets Not Found",
+                    Detail = "One or more ticket codes are invalid.",
+                    Instance = HttpContext.Request.Path
+                });
             }
 
             var booking = new BookedTicket();
@@ -48,12 +68,28 @@ namespace AccelokaAPI.Controllers
 
                 if (ticket.Quota < ticketRequest.Quantity)
                 {
-                    return BadRequest(new { message = $"Insufficient quota for ticket {ticket.Code}." });
+                    Log.Warning("Insufficient quota for ticket {TicketCode}. Requested: {Qty}, Available: {Quota}",
+                                ticket.Code, ticketRequest.Quantity, ticket.Quota);
+                    return BadRequest(new ProblemDetails
+                    {   
+                        Type = "https://tools.ietf.org/html/rfc7807",
+                        Status = 400,
+                        Title = "Insufficient Quota",
+                        Detail = $"Insufficient quota for ticket {ticket.Code}.",
+                        Instance = HttpContext.Request.Path
+                    });
                 }
 
                 if (ticket.EventDate <= DateTime.UtcNow)
-                {
-                    return BadRequest(new { message = $"Cannot book past event ticket {ticket.Code}." });
+                {   
+                    Log.Warning("Attempt to book a past event ticket: {TicketCode}", ticket.Code);
+                     return BadRequest(new ProblemDetails
+                    {
+                        Status = 400,
+                        Title = "Invalid Booking Date",
+                        Detail = $"Cannot book past event ticket {ticket.Code}.",
+                        Instance = HttpContext.Request.Path
+                    });
                 }
 
                 decimal totalPrice = ticket.Price * ticketRequest.Quantity;
@@ -80,7 +116,7 @@ namespace AccelokaAPI.Controllers
                 {
                     TicketCode = ticket.Code,
                     TicketName = ticket.Name,
-                    Price = totalPrice
+                    Price = totalPrice,
                 });
                 
                 categorySummaries[ticket.Category.CategoryName].SummaryPrice += totalPrice;
@@ -88,7 +124,10 @@ namespace AccelokaAPI.Controllers
             }
 
             _context.BookedTickets.Add(booking);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
+            Log.Information("Booking successful. Total price: {TotalPrice}, Booking ID: {BookingId}",
+                            totalBookingPrice, booking.Id);
 
             var response = new BookingResponse
             {

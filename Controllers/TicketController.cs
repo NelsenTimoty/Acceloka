@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using AccelokaAPI.Repositories;
 using AccelokaAPI.DTOs;
+using Serilog;
 
 namespace AccelokaAPI.Controllers
 {
@@ -27,26 +28,46 @@ namespace AccelokaAPI.Controllers
             [FromQuery] string? orderState = "asc",
             [FromQuery] int page = 1)
         {
-            if (page < 1) return BadRequest(new { message = "Page must be greater than 0" });
+            if (page < 1)
+            {
+                Log.Warning("Invalid page number: {Page}", page);
+                return BadRequest(new ProblemDetails
+                {
+                    Type = "https://tools.ietf.org/html/rfc7807",
+                    Title = "Bad Request",
+                    Status = 400,
+                    Detail = "Page must be greater than 0.",
+                    Instance = HttpContext.Request.Path
+                });
+            }
+
+            Log.Information("Fetching available tickets with filters: " +
+                            "Category={Category}, Code={Code}, Name={Name}, MaxPrice={MaxPrice}, " +
+                            "MinEventDate={MinEventDate}, MaxEventDate={MaxEventDate}, " +
+                            "OrderBy={OrderBy}, OrderState={OrderState}, Page={Page}",
+                            category, code, name, maxPrice, minEventDate, maxEventDate, orderBy, orderState, page);
 
             try
             {
                 var result = await _ticketRepository.GetAvailableTickets(
                     category, code, name, maxPrice, minEventDate, maxEventDate, 
-                    orderBy ?? "Code", // ✅ Default: Order by `Code`
-                    orderState ?? "asc", // ✅ Default: Ascending order
+                    orderBy ?? "Code",
+                    orderState ?? "asc",
                     page);
 
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
+                Log.Error(ex, "Error occurred while fetching available tickets.");
+
+                return StatusCode(500, new ProblemDetails
                 {
-                    type = "https://tools.ietf.org/html/rfc7807",
-                    title = "Internal Server Error",
-                    status = 500,
-                    detail = ex.Message
+                    Type = "https://tools.ietf.org/html/rfc7807",
+                    Title = "Internal Server Error",
+                    Status = 500,
+                    Detail = "An error occurred while processing your request.",
+                    Instance = HttpContext.Request.Path
                 });
             }
         }

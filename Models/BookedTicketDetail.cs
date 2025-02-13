@@ -14,7 +14,9 @@ namespace AccelokaAPI.Models
         
         [ForeignKey("TicketId")]
         public Ticket Ticket { get; set; }
-        
+        [ForeignKey("BookedTicketId")]
+        public BookedTicket BookedTicket { get; set; }
+
         [Required]
         public int Quantity { get; set; }
         

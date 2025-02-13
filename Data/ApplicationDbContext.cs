@@ -18,7 +18,7 @@ namespace AccelokaAPI.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // ✅ Configure Relationships
+            // Configure Relationships
             modelBuilder.Entity<Category>()
                 .HasIndex(c => c.CategoryName)
                 .IsUnique();
@@ -28,7 +28,7 @@ namespace AccelokaAPI.Data
                 .HasOne(t => t.Category)
                 .WithMany(c => c.Tickets)
                 .HasForeignKey(t => t.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascading delete
+                .OnDelete(DeleteBehavior.Restrict);
             
             modelBuilder.Entity<Ticket>()
                 .HasIndex(t => t.Code)
@@ -40,6 +40,12 @@ namespace AccelokaAPI.Data
                 .WithMany()
                 .HasForeignKey(btd => btd.TicketId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BookedTicket>()
+                .HasMany(bt => bt.BookedTicketDetails)
+                .WithOne(btd => btd.BookedTicket)
+                .HasForeignKey(btd => btd.BookedTicketId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

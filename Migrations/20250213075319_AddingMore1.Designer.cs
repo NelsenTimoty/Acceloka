@@ -4,6 +4,7 @@ using AccelokaAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccelokaAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250213075319_AddingMore1")]
+    partial class AddingMore1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,7 +137,7 @@ namespace AccelokaAPI.Migrations
 
             modelBuilder.Entity("AccelokaAPI.Models.BookedTicketDetail", b =>
                 {
-                    b.HasOne("AccelokaAPI.Models.BookedTicket", "BookedTicket")
+                    b.HasOne("AccelokaAPI.Models.BookedTicket", null)
                         .WithMany("BookedTicketDetails")
                         .HasForeignKey("BookedTicketId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -145,8 +148,6 @@ namespace AccelokaAPI.Migrations
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("BookedTicket");
 
                     b.Navigation("Ticket");
                 });

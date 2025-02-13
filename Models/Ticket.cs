@@ -21,7 +21,6 @@ namespace AccelokaAPI.Models
         public DateTime EventDate { get; set; }
         public decimal Price { get; set; }
         public int Quota { get; set; }
-
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string CreatedBy { get; set; } = "SYSTEM";
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
