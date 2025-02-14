@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccelokaAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250213075319_AddingMore1")]
-    partial class AddingMore1
+    [Migration("20250214065918_SeedTicketsWithFixedGuid")]
+    partial class SeedTicketsWithFixedGuid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,23 @@ namespace AccelokaAPI.Migrations
                         .IsUnique();
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = new Guid("d1b2c3d4-e5f6-789a-bcde-f01234567890"),
+                            CategoryName = "Concert"
+                        },
+                        new
+                        {
+                            CategoryId = new Guid("a1b2c3d4-e5f6-789a-bcde-f01234567891"),
+                            CategoryName = "Sports"
+                        },
+                        new
+                        {
+                            CategoryId = new Guid("a1b2c3d4-e5f6-789a-bcde-f01234567892"),
+                            CategoryName = "Theater"
+                        });
                 });
 
             modelBuilder.Entity("AccelokaAPI.Models.Ticket", b =>
@@ -133,11 +150,55 @@ namespace AccelokaAPI.Migrations
                         .IsUnique();
 
                     b.ToTable("Tickets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f1b2c3d4-e5f6-789a-bcde-f01234567893"),
+                            CategoryId = new Guid("d1b2c3d4-e5f6-789a-bcde-f01234567890"),
+                            Code = "RF001",
+                            CreatedAt = new DateTime(2024, 2, 14, 12, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "SYSTEM",
+                            EventDate = new DateTime(2024, 3, 15, 12, 0, 0, 0, DateTimeKind.Utc),
+                            Name = "Queens Rock Festival",
+                            Price = 150.00m,
+                            Quota = 100,
+                            UpdatedAt = new DateTime(2024, 2, 14, 12, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedBy = "SYSTEM"
+                        },
+                        new
+                        {
+                            Id = new Guid("f1b2c3d4-e5f6-789a-bcde-f01234567894"),
+                            CategoryId = new Guid("a1b2c3d4-e5f6-789a-bcde-f01234567891"),
+                            Code = "BF002",
+                            CreatedAt = new DateTime(2024, 2, 14, 12, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "SYSTEM",
+                            EventDate = new DateTime(2024, 2, 28, 12, 0, 0, 0, DateTimeKind.Utc),
+                            Name = "NBA Basketball Finals",
+                            Price = 200.00m,
+                            Quota = 50,
+                            UpdatedAt = new DateTime(2024, 2, 14, 12, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedBy = "SYSTEM"
+                        },
+                        new
+                        {
+                            Id = new Guid("f1b2c3d4-e5f6-789a-bcde-f01234567843"),
+                            CategoryId = new Guid("a1b2c3d4-e5f6-789a-bcde-f01234567892"),
+                            Code = "BM003",
+                            CreatedAt = new DateTime(2024, 2, 14, 12, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "SYSTEM",
+                            EventDate = new DateTime(2024, 3, 21, 12, 0, 0, 0, DateTimeKind.Utc),
+                            Name = "Hollywood Broadway Musical",
+                            Price = 180.00m,
+                            Quota = 75,
+                            UpdatedAt = new DateTime(2024, 2, 14, 12, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedBy = "SYSTEM"
+                        });
                 });
 
             modelBuilder.Entity("AccelokaAPI.Models.BookedTicketDetail", b =>
                 {
-                    b.HasOne("AccelokaAPI.Models.BookedTicket", null)
+                    b.HasOne("AccelokaAPI.Models.BookedTicket", "BookedTicket")
                         .WithMany("BookedTicketDetails")
                         .HasForeignKey("BookedTicketId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -148,6 +209,8 @@ namespace AccelokaAPI.Migrations
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("BookedTicket");
 
                     b.Navigation("Ticket");
                 });
